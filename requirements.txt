@@ -2,7 +2,11 @@ streamlit
 pypdf2
 langchain
 python-dotenv
-faiss-cpu
 openai
 huggingface_hub
--e .
+InstructorEmbedding
+langchain==0.2.0
+langchain-community==0.2.0
+sentence-transformers==2.4.0
+faiss-cpu==1.7.4
+#-e .
