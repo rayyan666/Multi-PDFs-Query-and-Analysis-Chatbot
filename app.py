@@ -18,6 +18,7 @@ def get_pdf_text(pdf_docs):
         pdf_reader = PdfReader(pdf)
         for page in pdf_reader.pages:
             text += page.extract_text()
+    logging.info(f"Extracted text from {len(pdf_docs)} PDF(s).")
     return text
     
 
@@ -30,13 +31,14 @@ def get_text_chunks(text):
     )
 
     chunks = text_splitter.split_text(text)
-    logging.info("Text Split done")
+    logging.info(f"Text split into {len(chunks)} chunks.")
     return chunks
 
 
 def get_vectorstore(text_chunks):
     embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/all-MiniLM-L6-v2")
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
+    logging.info("Vectorstore created successfully.")
     return vectorstore
 
 
@@ -44,9 +46,11 @@ def get_conversation_chain(vectorstore):
     load_dotenv()
     hf_api = os.getenv("HUGGINGFACEHUB_API_TOKEN")
     if hf_api is None:
+       logging.error("API_KEY environment variable not set.")
        raise ValueError("API_KEY environment variable not set")
     
     #llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
+    logging.info("Initializing HuggingFaceHub with model: google/flan-t5-large")
     llm = HuggingFaceHub(repo_id="google/flan-t5-large", model_kwargs={"temperature": 0.7, "max_length": 512}, huggingfacehub_api_token=hf_api)
     memory = ConversationBufferMemory(memory_key= 'chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(
@@ -55,9 +59,11 @@ def get_conversation_chain(vectorstore):
         memory = memory
 
     )
+    logging.info("Conversation chain created successfully.")
     return conversation_chain
 
 def handle_user_input(user_question):
+    logging.info(f"User asked: {user_question}")
     response = st.session_state.conversation({'question': user_question})
     st.session_state.chat_history = response['chat_history']
 
@@ -93,6 +99,8 @@ def main():
             "Upload you PDF files here and click the submit button",accept_multiple_files=True)
         if st.button("Submit"):
             with st.spinner("Processing"):
+                logging.info("Processing PDF files.")
+
                 #get the pdf text 
                 raw_text = get_pdf_text(pdf_docs)
 
@@ -103,6 +111,7 @@ def main():
                 vectorstore = get_vectorstore(text_chunks)
 
                 st.session_state.conversation = get_conversation_chain(vectorstore)
+                logging.info("Conversation chain is ready for interaction.")
  
 if __name__=='__main__':
     main()
