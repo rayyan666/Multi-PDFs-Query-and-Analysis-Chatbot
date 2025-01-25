@@ -6,10 +6,11 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-from langchain.chat_models import ChatOpenAI
+# from langchain.chat_models import ChatOpenAI
 from langchain.llms import HuggingFaceHub
 from htmlpage import css,bot_template,user_template
 import os
+from logger import logging
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -18,6 +19,8 @@ def get_pdf_text(pdf_docs):
         for page in pdf_reader.pages:
             text += page.extract_text()
     return text
+    
+
 
 def get_text_chunks(text):
     text_splitter = CharacterTextSplitter(separator="\n",
@@ -27,6 +30,7 @@ def get_text_chunks(text):
     )
 
     chunks = text_splitter.split_text(text)
+    logging.info("Text Split done")
     return chunks
 
 
@@ -43,7 +47,7 @@ def get_conversation_chain(vectorstore):
        raise ValueError("API_KEY environment variable not set")
     
     #llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
-    llm = HuggingFaceHub(repo_id="google/flan-t5-base", model_kwargs={"temperature": 0.7, "max_length": 512}, huggingfacehub_api_token=hf_api)
+    llm = HuggingFaceHub(repo_id="google/flan-t5-large", model_kwargs={"temperature": 0.7, "max_length": 512}, huggingfacehub_api_token=hf_api)
     memory = ConversationBufferMemory(memory_key= 'chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
