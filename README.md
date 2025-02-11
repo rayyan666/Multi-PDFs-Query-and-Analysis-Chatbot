@@ -47,6 +47,7 @@ git clone https://github.com/rayyan666/Multi-PDFs-Query-and-Analysis-Chatbot.git
 cd Multi-PDFs-Query-and-Analysis-Chatbot
 pip install -r requirements.txt
 streamlit run app.py
+```
 
 ## Future Enhancements
 - **Support for additional file formats:**  
