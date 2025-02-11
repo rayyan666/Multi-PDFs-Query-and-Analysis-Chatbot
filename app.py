@@ -46,12 +46,12 @@ def get_conversation_chain(vectorstore):
     load_dotenv()
     hf_api = os.getenv("HUGGINGFACEHUB_API_TOKEN")
     if hf_api is None:
-       logging.error("API_KEY environment variable not set.")
+       logging.error("API_KEY environment variable not set.")   
        raise ValueError("API_KEY environment variable not set")
     
     #llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
     logging.info("Initializing HuggingFaceHub with model: google/flan-t5-large")
-    llm = HuggingFaceHub(repo_id="google/flan-t5-lar    ge", model_kwargs={"temperature": 0.7, "max_length": 512}, huggingfacehub_api_token=hf_api)
+    llm = HuggingFaceHub(repo_id="google/flan-t5-large", model_kwargs={"temperature": 0.7, "max_length": 512}, huggingfacehub_api_token=hf_api)
     memory = ConversationBufferMemory(memory_key= 'chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
