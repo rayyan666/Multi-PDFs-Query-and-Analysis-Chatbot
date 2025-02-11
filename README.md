@@ -11,7 +11,6 @@
 - **Memory Retention:** Implements **ConversationBufferMemory** to maintain chat history for coherent interactions.  
 - **User-Friendly UI:** Built with **Streamlit**, offering an intuitive and interactive interface for seamless document exploration.  
 
----
 
 ## Tech Stack
 - **Frameworks/Libraries:**  
@@ -24,7 +23,6 @@
   - **Python-dotenv** for environment variable management.  
   - **Logging** for tracking application events.  
 
----
 
 ## How It Works
 1. **Text Extraction:**  
