@@ -11,6 +11,10 @@
 - **Memory Retention:** Implements **ConversationBufferMemory** to maintain chat history for coherent interactions.  
 - **User-Friendly UI:** Built with **Streamlit**, offering an intuitive and interactive interface for seamless document exploration.  
 
+## Workflow
+
+![alt text](<chat diagram.png>)
+
 
 ## Tech Stack
 - **Frameworks/Libraries:**  
