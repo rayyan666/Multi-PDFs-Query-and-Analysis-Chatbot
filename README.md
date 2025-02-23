@@ -3,6 +3,9 @@
 ### Project Overview
 #### This project enables users to upload multiple PDF files and engage in a conversational interface to ask questions about the content. It uses PyPDF2 for extracting text, LangChain for text chunking and retrieval, and FAISS for vector-based search. The app integrates Hugging Face models to provide contextually accurate responses. Built with Streamlit, it offers an intuitive interface for seamless document interaction. Perfect for exploring and querying PDF content efficiently.
 
+## Workflow
+
+![alt text](<chat diagram.png>)
 
 ## Key Features
 - **Multi-PDF Support:** Users can upload and query multiple PDF files simultaneously.  
@@ -10,10 +13,6 @@
 - **Advanced NLP Techniques:** Utilizes **Hugging Face embeddings** and **FAISS** for efficient text retrieval and similarity search.  
 - **Memory Retention:** Implements **ConversationBufferMemory** to maintain chat history for coherent interactions.  
 - **User-Friendly UI:** Built with **Streamlit**, offering an intuitive and interactive interface for seamless document exploration.  
-
-## Workflow
-
-![alt text](<chat diagram.png>)
 
 
 ## Tech Stack
