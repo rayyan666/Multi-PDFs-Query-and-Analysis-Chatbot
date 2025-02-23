@@ -25,7 +25,7 @@ def get_pdf_text(pdf_docs):
 
 def get_text_chunks(text):
     text_splitter = CharacterTextSplitter(separator="\n",
-    chunk_size=500,
+    chunk_size=1000,
     chunk_overlap=200,
     length_function=len
     )
@@ -38,7 +38,7 @@ def get_text_chunks(text):
 def get_vectorstore(text_chunks):
     embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/all-MiniLM-L6-v2")
     #embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/paraphrase-mpnet-base-v2")
-    #embeddings = HuggingFaceEmbeddings(model_name = "hkunlp/instructor-base")
+    #embeddings = HuggingFaceEmbeddings(model_name = "hkunlp/instructor-xl")
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     logging.info("Vectorstore created successfully.")
     return vectorstore
