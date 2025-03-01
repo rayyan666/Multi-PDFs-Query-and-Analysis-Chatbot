@@ -115,5 +115,6 @@ def main():
                 st.session_state.conversation = get_conversation_chain(vectorstore)
                 logging.info("Conversation chain is ready for interaction.")
  
-if __name__=='__main__':
-    main()
+if __name__ == "__main__":
+    import os
+    os.system("streamlit run app.py --server.port $PORT")
